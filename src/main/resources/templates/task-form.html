@@ -10,7 +10,7 @@
 <body>
     <h2>New Task</h2>
 
-    <form action="@{/tasks/new}" method="post" th:object="${task}">
+    <form action="/tasks/new" method="post" th:object="${task}">
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" th:field="*{title}" required>
 

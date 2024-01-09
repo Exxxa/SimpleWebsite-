@@ -3,6 +3,9 @@ package com.example.PierreApp.service;
 
 import com.example.PierreApp.model.Task;
 import com.example.PierreApp.repository.TaskRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +16,7 @@ import java.util.Optional;
 public class TaskService {
 
     private final TaskRepository taskRepository;
-
+    @Autowired
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
@@ -25,7 +28,7 @@ public class TaskService {
     public Optional<Task> getTaskById(Long taskId) {
         return taskRepository.findById(taskId);
     }
-
+    @Transactional
     public Task createTask(Task task) {
         // Implement any business logic/validation before saving
         return taskRepository.save(task);

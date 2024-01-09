@@ -17,7 +17,7 @@ import java.util.Optional;
 public class TaskController {
 
     private final TaskService taskService;
-
+    @Autowired
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
@@ -45,7 +45,7 @@ public class TaskController {
     @PostMapping("/new")
     public String createTask(@ModelAttribute Task task) {
         taskService.createTask(task);
-        return "tasks";
+        return "redirect:/tasks";
     }
 
     @GetMapping("/{taskId}/edit")
