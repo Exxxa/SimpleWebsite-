@@ -10,7 +10,7 @@
 <body>
     <h2>Edit Task</h2>
 
-    <form action="@{/tasks/{id}/edit(id=${task.id})}" method="post" th:object="${task}">
+    <form action="/tasks/edit" method="post" th:object="${task}">
         <input type="hidden" th:field="*{id}">
 
         <label for="title">Title:</label>
