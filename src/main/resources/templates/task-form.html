@@ -1,0 +1,31 @@
+<!-- src/main/resources/templates/tasks/task-form.html -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Task</title>
+</head>
+<body>
+    <h2>New Task</h2>
+
+    <form action="@{/tasks/new}" method="post" th:object="${task}">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" th:field="*{title}" required>
+
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" th:field="*{description}" required>
+
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status" th:field="*{status}" required>
+
+        <label for="dueDate">Due Date:</label>
+        <input type="text" id="dueDate" name="dueDate" th:field="*{dueDate}" required>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <a th:href="@{/tasks}">Back to Task List</a>
+</body>
+</html>
