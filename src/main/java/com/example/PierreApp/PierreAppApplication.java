@@ -1,13 +1,13 @@
-package com.example.demo;
+package com.example.PierreApp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PierreApplication {
+public class PierreAppApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PierreApplication.class, args);
+		SpringApplication.run(PierreAppApplication.class, args);
 	}
 
 }
