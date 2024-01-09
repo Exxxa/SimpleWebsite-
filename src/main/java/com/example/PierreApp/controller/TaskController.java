@@ -10,27 +10,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/tasks")
+//@RequestMapping("/tasks")
 public class TaskController {
-
-    private final TaskService taskService;
-
     @Autowired
-    public TaskController(TaskService taskService) {
-        this.taskService = taskService;
-    }
+    private TaskService taskService;
 
-    @GetMapping
+    @GetMapping("/tasks")
     public String getAllTasks(Model model) {
-        List<Task> tasks = taskService.getAllTasks();
-        model.addAttribute("tasks", tasks);
-        return "tasks/task-list";
+        //List<Task> tasks = taskService.getAllTasks();
+        //model.addAttribute("tasks", new ArrayList<>());
+        return "task-list.html";
     }
-
+/* 
     @GetMapping("/{taskId}")
     public String getTaskById(@PathVariable Long taskId, Model model) {
         Optional<Task> task = taskService.getTaskById(taskId);
@@ -74,5 +70,5 @@ public class TaskController {
         List<Task> tasks = taskService.getTasksByStatus(status);
         model.addAttribute("tasks", tasks);
         return "tasks/task-list";
-    }
+    }*/
 }

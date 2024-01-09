@@ -21,22 +21,6 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-            <tr th:each="task : ${tasks}">
-                <td th:text="${task.id}"></td>
-                <td th:text="${task.title}"></td>
-                <td th:text="${task.description}"></td>
-                <td th:text="${task.status}"></td>
-                <td th:text="${task.dueDate}"></td>
-                <td>
-                    <a th:href="@{/tasks/{id}(id=${task.id})}">Details</a>
-                    <a th:href="@{/tasks/{id}/edit(id=${task.id})}">Edit</a>
-                    <a th:href="@{/tasks/{id}/delete(id=${task.id})}">Delete</a>
-                </td>
-            </tr>
-        </tbody>
     </table>
-
-    <a th:href="@{/tasks/new}">Add New Task</a>
 </body>
 </html>
