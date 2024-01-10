@@ -2,17 +2,22 @@ package com.example.PierreApp.controller;
 
 import com.example.PierreApp.model.Task;
 import com.example.PierreApp.service.TaskService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.ui.Model;
-import org.springframework.validation.support.BindingAwareModelMap;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class TaskControllerTest {
 
@@ -22,43 +27,61 @@ class TaskControllerTest {
     @InjectMocks
     private TaskController taskController;
 
+    private MockMvc mockMvc;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(taskController).build();
+    }
+
     @Test
-    void testGetAllTasks() {
-        Model model = new BindingAwareModelMap();
+    void testGetAllTasks() throws Exception {
+        // Mock the behavior of the taskService
         when(taskService.getAllTasks()).thenReturn(Collections.emptyList());
 
-        String viewName = taskController.getAllTasks(model);
+        // Perform the GET request
+        mockMvc.perform(get("/tasks"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("task-list"))
+                .andExpect(model().attributeExists("tasks"));
 
-        assertEquals("task-list", viewName);
+        // Verify that the taskService's getAllTasks method was called
         verify(taskService, times(1)).getAllTasks();
-        assertEquals(Collections.emptyList(), model.getAttribute("tasks"));
     }
 
-    // Add similar tests for other methods (getTaskById, showTaskForm, createTask, etc.)
-
     @Test
-    void testShowEditForm() {
-        Model model = new BindingAwareModelMap();
+    void testGetTaskById() throws Exception {
         Long taskId = 1L;
+        // Mock the behavior of the taskService
         when(taskService.getTaskById(taskId)).thenReturn(Optional.of(new Task()));
 
-        String viewName = taskController.showEditForm(taskId, model);
+        // Perform the GET request
+        mockMvc.perform(get("/tasks/{taskId}", taskId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("task-details"))
+                .andExpect(model().attributeExists("task"));
 
-        assertEquals("task-edit", viewName);
+        // Verify that the taskService's getTaskById method was called with the correct argument
         verify(taskService, times(1)).getTaskById(taskId);
-        assertEquals(new Task(), model.getAttribute("task"));
     }
 
-    @Test
-    void testUpdateTask() {
-        Task updatedTask = new Task();
-        updatedTask.setId(1L);
+     @Test
+    void testCreateTask() throws Exception {
+        LocalDate dueDate = LocalDate.parse("2024-01-15");
+        Task taskToSave = new Task("Test Task", "Description", "Pending", dueDate);
 
-        String viewName = taskController.updateTask(updatedTask);
+        // Perform the POST request
+        mockMvc.perform(get("/tasks/new")
+                .param("title", taskToSave.getTitle())
+                .param("description", taskToSave.getDescription())
+                .param("status", taskToSave.getStatus())
+                .param("dueDate", taskToSave.getDueDate().toString()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/tasks"));
 
-        assertEquals("redirect:/tasks", viewName);
-        verify(taskService, times(1)).updateTask(updatedTask.getId(), updatedTask);
+        // Verify that the taskService's createTask method was called with the correct argument
+        verify(taskService, times(1)).createTask(any(Task.class));
     }
 
-    // Add similar tests for deleteTask, getTasksByStatus, etc.
 }

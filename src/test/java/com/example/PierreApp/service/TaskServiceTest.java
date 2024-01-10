@@ -69,13 +69,19 @@ class TaskServiceTest {
 
     @Test
     void testUpdateTask() {
-        
         LocalDate dueDate = LocalDate.parse("2024-01-15");
         Long taskId = 1L;
+
+        // Create a task with the same ID as the one you're trying to update
+        Task existingTask = new Task("Existing Task", "Existing Description", "Pending", LocalDate.parse("2023-01-15"));
+        existingTask.setId(taskId);
+
         Task updatedTask = new Task("Updated Task", "Updated Description", "Completed", dueDate);
+        updatedTask.setId(taskId);
 
         // Mock the behavior of the taskRepository
         when(taskRepository.existsById(taskId)).thenReturn(true);
+        when(taskRepository.findById(taskId)).thenReturn(Optional.of(existingTask));
 
         // Call the service method
         taskService.updateTask(taskId, updatedTask);
@@ -83,6 +89,7 @@ class TaskServiceTest {
         // Verify that the taskRepository's save method was called with the correct argument
         verify(taskRepository, times(1)).save(updatedTask);
     }
+
 
     @Test
     void testUpdateTaskNotFound() {

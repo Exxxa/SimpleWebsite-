@@ -1,20 +1,24 @@
 -------------------------------------------------------------------------------
 Test set: com.example.PierreApp.service.TaskServiceTest
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.457 s <<< FAILURE! - in com.example.PierreApp.service.TaskServiceTest
-com.example.PierreApp.service.TaskServiceTest.testUpdateTask  Time elapsed: 0.024 s  <<< FAILURE!
-Wanted but not invoked:
+Tests run: 7, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.267 s <<< FAILURE! - in com.example.PierreApp.service.TaskServiceTest
+com.example.PierreApp.service.TaskServiceTest.testUpdateTask  Time elapsed: 0.019 s  <<< FAILURE!
+Argument(s) are different! Wanted:
 taskRepository.save(
-    com.example.PierreApp.model.Task@78b888df
+    com.example.PierreApp.model.Task@2a3de2b
 );
--> at com.example.PierreApp.service.TaskServiceTest.testUpdateTask(TaskServiceTest.java:84)
-
-However, there was exactly 1 interaction with this mock:
-taskRepository.findById(1L);
+-> at com.example.PierreApp.service.TaskServiceTest.testUpdateTask(TaskServiceTest.java:90)
+Actual invocations have different arguments:
+taskRepository.findById(
+    1L
+);
 -> at com.example.PierreApp.service.TaskService.updateTask(TaskService.java:39)
+taskRepository.save(
+    com.example.PierreApp.model.Task@77510da
+);
+-> at com.example.PierreApp.service.TaskService.updateTask(TaskService.java:47)
 
-
-	at com.example.PierreApp.service.TaskServiceTest.testUpdateTask(TaskServiceTest.java:84)
+	at com.example.PierreApp.service.TaskServiceTest.testUpdateTask(TaskServiceTest.java:90)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:727)
@@ -85,13 +89,13 @@ taskRepository.findById(1L);
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
-com.example.PierreApp.service.TaskServiceTest.testUpdateTaskNotFound  Time elapsed: 0.009 s  <<< FAILURE!
+com.example.PierreApp.service.TaskServiceTest.testUpdateTaskNotFound  Time elapsed: 0.005 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
 	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
 	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
 	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3083)
-	at com.example.PierreApp.service.TaskServiceTest.testUpdateTaskNotFound(TaskServiceTest.java:98)
+	at com.example.PierreApp.service.TaskServiceTest.testUpdateTaskNotFound(TaskServiceTest.java:105)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:727)
