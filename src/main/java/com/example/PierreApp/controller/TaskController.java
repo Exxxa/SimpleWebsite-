@@ -58,13 +58,13 @@ public class TaskController {
     @PostMapping("/{taskId}/edit")
     public String updateTask(@PathVariable Long taskId, @ModelAttribute Task updatedTask) {
         taskService.updateTask(taskId, updatedTask);
-        return "tasks";
+        return "redirect:/tasks";
     }
 
     @GetMapping("/{taskId}/delete")
     public String deleteTask(@PathVariable Long taskId) {
         taskService.deleteTask(taskId);
-        return "tasks";
+        return "redirect:/tasks";
     }
 
     @GetMapping("/status/{status}")
